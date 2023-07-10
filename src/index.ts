@@ -17,7 +17,7 @@ AppDataSource.initialize()
     app.use(
       cors({
         credentials: true,
-        origin: [`http://localhost:${process.env.PORT}`],
+        origin: [`http://localhost:${process.env.CLIENT_PORT}`],
       })
     );
 
@@ -25,7 +25,7 @@ AppDataSource.initialize()
     app.use(errorHandler);
 
     app.listen(8000, () => {
-      console.log(`listening to port ${process.env.PORT}`);
+      console.log(`listening to port ${process.env.SERVER_PORT}`);
     });
   })
   .catch((error) => console.log(error));

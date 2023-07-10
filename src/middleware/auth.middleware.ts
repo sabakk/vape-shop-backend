@@ -57,6 +57,7 @@ export const isAdmin = async (
         message: 'Forbidden: Access is denied',
       });
     }
+    req['user'] = data;
     next();
   } catch (e) {
     return res.status(403).send({
