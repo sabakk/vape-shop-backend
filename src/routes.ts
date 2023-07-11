@@ -16,8 +16,15 @@ import {
   LoginValidation,
   RegisterValidation,
 } from './validation/auth.validation';
-import { CreateProduct, DelateProduct } from './controller/product.controller';
+import {
+  CreateProduct,
+  DelateProduct,
+  GetProduct,
+  Products,
+  UpdateProduct,
+} from './controller/product.controller';
 import { uploadImage } from './utility/aws-s3';
+import { isAdmin, isAuth } from './middleware/auth.middleware';
 
 export const routes = (router: Router) => {
   router.post('/api/register', validate(RegisterValidation, {}, {}), Register);
@@ -25,6 +32,7 @@ export const routes = (router: Router) => {
   router.get('/api/user', AuthenticatedUser);
   router.post('/api/refresh', Refresh);
   router.post('/api/logout', Logout);
+
   router.post(
     '/api/forgot',
     validate(ForgotValidation, {}, {}),
@@ -32,6 +40,19 @@ export const routes = (router: Router) => {
   );
   router.post('/api/reset', validate(ResetValidation, {}, {}), ResetPassword);
 
-  router.post('/api/product', uploadImage.single('image'), CreateProduct);
-  router.delete('/api/product', DelateProduct);
+  router.get('/api/product', isAuth, Products);
+  router.post(
+    '/api/product',
+    uploadImage.single('image'),
+    isAdmin,
+    CreateProduct
+  );
+  router.put(
+    '/api/product/:id',
+    uploadImage.single('image'),
+    isAdmin,
+    UpdateProduct
+  );
+  router.get('/api/product/:id', isAuth, GetProduct);
+  router.delete('/api/product', isAdmin, DelateProduct);
 };

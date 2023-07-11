@@ -17,6 +17,7 @@ export const isAuth = async (
         message: 'unauthenticated',
       });
     }
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...data } = await User.findOneBy({
       id: parseInt(payload.id),
@@ -27,6 +28,7 @@ export const isAuth = async (
   } catch (e) {
     return res.status(401).send({
       message: 'unauthenticated',
+      e,
     });
   }
 };
