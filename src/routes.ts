@@ -25,6 +25,7 @@ import {
 } from './controller/product.controller';
 // import { uploadImage } from './utility/aws-s3';
 import { isAdmin, isAuth } from './middleware/auth.middleware';
+import { GetAllCategories, CreateCategory, UpdateCategory, GetCategory, DelateCategory } from './controller/category.controller';
 
 export const routes = (router: Router) => {
   router.post('/api/register', validate(RegisterValidation, {}, {}), Register);
@@ -55,4 +56,18 @@ export const routes = (router: Router) => {
   );
   router.get('/api/product/:id', isAuth, GetProduct);
   router.delete('/api/product', isAdmin, DelateProduct);
+
+  router.get('/api/category', isAuth, GetAllCategories);
+  router.post(
+    '/api/category',
+    isAdmin,
+    CreateCategory
+  );
+  router.put(
+    '/api/category/:id',
+    isAdmin,
+    UpdateCategory
+  );
+  router.get('/api/category/:id', isAuth, GetCategory);
+  router.delete('/api/category', isAdmin, DelateCategory);
 };
