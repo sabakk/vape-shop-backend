@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Reset } from '../entity/reset.entity';
 import { User } from '../entity/user.entity';
 import bcryptjs from 'bcryptjs';
-import { sendEmail } from '../utility/email';
+// import { sendEmail } from '../utility/email';
 
 export const ForgotPassword = async (req: Request, res: Response) => {
   const { email } = req.body;
@@ -12,7 +12,7 @@ export const ForgotPassword = async (req: Request, res: Response) => {
   const reset = await Reset.create({ email, token });
   await reset.save();
 
-  sendEmail(process.env.AWS_SES_EMAIL_SENDER, token);
+  // sendEmail(process.env.AWS_SES_EMAIL_SENDER, token);
 
   res.send({
     message: 'Please check your email!',

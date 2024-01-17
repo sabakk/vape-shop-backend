@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Product } from '../entity/product.entity';
-import { deleteImage } from '../utility/aws-s3';
+// import { deleteImage } from '../utility/aws-s3';
 
 export const Products = async (req: Request, res: Response) => {
   const take = 15;
@@ -103,7 +103,7 @@ export const DelateProduct = async (req: Request, res: Response) => {
     });
 
     const key = product.image.split('com/')[1];
-    deleteImage(key);
+    // deleteImage(key);
     await Product.delete(id);
 
     res.send({

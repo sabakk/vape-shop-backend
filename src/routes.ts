@@ -23,7 +23,7 @@ import {
   Products,
   UpdateProduct,
 } from './controller/product.controller';
-import { uploadImage } from './utility/aws-s3';
+// import { uploadImage } from './utility/aws-s3';
 import { isAdmin, isAuth } from './middleware/auth.middleware';
 
 export const routes = (router: Router) => {
@@ -43,13 +43,13 @@ export const routes = (router: Router) => {
   router.get('/api/product', isAuth, Products);
   router.post(
     '/api/product',
-    uploadImage.single('image'),
+    // uploadImage.single('image'),
     isAdmin,
     CreateProduct
   );
   router.put(
     '/api/product/:id',
-    uploadImage.single('image'),
+    // uploadImage.single('image'),
     isAdmin,
     UpdateProduct
   );
