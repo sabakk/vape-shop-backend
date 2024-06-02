@@ -1,0 +1,68 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: vape-postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 127.0.0.1:5432:5432
+    networks:
+      - vnet
+    restart: unless-stopped
+
+  # redis:
+  #   container_name: vape-redis
+  #   image: redis:6
+  #   volumes:
+  #     - redis:/data
+  #   ports:
+  #     - 127.0.0.1:6379:6379
+  #   networks:
+  #     - vnet
+  #   restart: unless-stopped
+  
+  # mailhog:
+  #   image: mailhog/mailhog
+  #   logging:
+  #     driver: 'none'  # disable saving logs
+  #   ports:
+  #     - 1025:1025 # smtp server
+  #     - 8025:8025 # web ui
+
+  pgadmin:
+    container_name: vape-pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: mw.mp@admin.com
+      PGADMIN_DEFAULT_PASSWORD: vape
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - 127.0.0.1:5050:80
+    networks:
+      - vnet
+    restart: unless-stopped
+
+  # srv:
+  #   container_name: vape-srv
+  #   build: .
+  #   ports:
+  #     - 127.0.0.1:6010:6010
+  #   networks:
+  #     - vnet
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - postgres
+
+networks:
+  vnet:
+    driver: bridge
+
+volumes:
+  postgres:
+  # redis:
